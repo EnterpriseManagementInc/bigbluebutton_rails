@@ -217,7 +217,7 @@ class Bigbluebutton::RoomsController < ApplicationController
       @room.fetch_is_running?
     rescue BigBlueButton::BigBlueButtonException => e
       flash[:error] = e.to_s[0..200]
-      render :json => { :running => "false", :error => "#{e.to_s[0..200]}" }
+      render :json => { :running => 'false', :error => "#{e.to_s[0..200]}" }
     else
       render :json => { :running => "#{@room.is_running?}" }
     end
@@ -260,12 +260,12 @@ class Bigbluebutton::RoomsController < ApplicationController
 
   def join_mobile
     @join_url = join_bigbluebutton_room_url(@room, :mobile => '1')
-    @join_url.gsub!(/http:\/\//i, "bigbluebutton://")
+    @join_url.gsub!(/http:\/\//i, 'bigbluebutton://')
 
     # TODO: we can't use the mconf url because the mobile client scanning the qrcode is not
     # logged. so we are using the full BBB url for now.
     @qrcode_url = @room.join_url(bigbluebutton_user.name, bigbluebutton_role(@room))
-    @qrcode_url.gsub!(/http:\/\//i, "bigbluebutton://")
+    @qrcode_url.gsub!(/http:\/\//i, 'bigbluebutton://')
   end
 
   def fetch_recordings
@@ -317,7 +317,7 @@ class Bigbluebutton::RoomsController < ApplicationController
 
   def set_request_headers
     unless @room.nil?
-      @room.request_headers["x-forwarded-for"] = request.remote_ip
+      @room.request_headers['x-forwarded-for'] = request.remote_ip
     end
   end
 
@@ -340,8 +340,11 @@ class Bigbluebutton::RoomsController < ApplicationController
       unless url.nil?
         # change the protocol to join with BBB-Android/Mconf-Mobile if set
         if BigbluebuttonRails::value_to_boolean(params[:mobile])
-          url.gsub!(/http:\/\//i, "bigbluebutton://")
+          url.gsub!(/http:\/\//i, 'bigbluebutton://')
         end
+
+        url.gsub!(/http:\/\//i, 'https://') if request.ssl?
+
         redirect_to(url)
       else
         flash[:error] = t('bigbluebutton_rails.rooms.errors.auth.not_running')
