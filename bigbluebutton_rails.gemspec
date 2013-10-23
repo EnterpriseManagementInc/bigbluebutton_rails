@@ -16,5 +16,5 @@ Gem::Specification.new do |s|
   s.require_paths = ["lib"]
 
   s.add_dependency('rails', '>= 3.0.0')
-  s.add_dependency('bigbluebutton-api-ruby', '~> 1.2.0')
+  s.add_dependency('bigbluebutton-api-ruby', '>= 1.3.0')
 end
