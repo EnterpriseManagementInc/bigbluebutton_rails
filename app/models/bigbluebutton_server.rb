@@ -51,7 +51,7 @@ class BigbluebuttonServer < ActiveRecord::Base
   def api
     if @api.nil?
       @api = BigBlueButton::BigBlueButtonApi.new(self.url, self.salt,
-                                                 self.version.to_s, false)
+                                                 self.version.to_s)
     end
     @api
   end

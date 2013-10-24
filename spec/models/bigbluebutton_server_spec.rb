@@ -117,7 +117,7 @@ describe BigbluebuttonServer do
     }
     context "with the correct attributes" do
       let(:api) { api = BigBlueButton::BigBlueButtonApi.new(server.url, server.salt,
-                                                            server.version, false) }
+                                                            server.version) }
       it { server.api.should == api }
 
       # updating any of these attributes should update the api
