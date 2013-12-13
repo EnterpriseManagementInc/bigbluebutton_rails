@@ -342,7 +342,7 @@ class Bigbluebutton::RoomsController < ApplicationController
         # enqueue an update in the meetings for later on
         # note: this is the only update that is not in the model, but has to be here
         # because the model doesn't know when a user joined a room
-        Resque.enqueue(::BigbluebuttonMeetingUpdater, @room.id, 15.seconds)
+        #Resque.enqueue(::BigbluebuttonMeetingUpdater, @room.id, 15.seconds)
 
         redirect_to url
       else

@@ -124,7 +124,7 @@ class BigbluebuttonRoom < ActiveRecord::Base
     response = self.server.api.end_meeting(self.meetingid, self.moderator_password)
 
     # enqueue an update in the meetings for later on
-    Resque.enqueue(::BigbluebuttonMeetingUpdater, self.id, 15.seconds)
+    #Resque.enqueue(::BigbluebuttonMeetingUpdater, self.id, 15.seconds)
 
     response
   end
@@ -360,7 +360,7 @@ class BigbluebuttonRoom < ActiveRecord::Base
     response = self.server.api.create_meeting(self.name, self.meetingid, opts)
 
     # enqueue an update in the meetings to start now
-    Resque.enqueue(::BigbluebuttonMeetingUpdater, self.id)
+    #Resque.enqueue(::BigbluebuttonMeetingUpdater, self.id)
 
     response
   end
