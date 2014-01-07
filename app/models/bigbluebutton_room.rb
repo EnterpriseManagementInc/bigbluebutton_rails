@@ -168,16 +168,17 @@ class BigbluebuttonRoom < ActiveRecord::Base
     require_server
 
     case role
-    when :moderator
-      r = self.server.api.join_meeting_url(self.meetingid, username, self.moderator_password)
-    when :attendee
-      r = self.server.api.join_meeting_url(self.meetingid, username, self.attendee_password)
-    else
-      r = self.server.api.join_meeting_url(self.meetingid, username, password)
-    end
+      when :moderator
+        self.server.api.join_meeting_url(self.meetingid, username, self.moderator_password)
+      when :attendee
+        self.server.api.join_meeting_url(self.meetingid, username, self.attendee_password)
+      when :guest
 
-    r.strip! unless r.nil?
-    r
+        params = { guest: true, auth: !bigbluebutton_user.anonymous? }
+        self.server.api.join_meeting_url(self.meetingid, username, self.attendee_password, params)
+      else
+        self.server.api.join_meeting_url(self.meetingid, username, password)
+    end
   end
 
 
