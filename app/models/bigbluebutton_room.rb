@@ -164,20 +164,17 @@ class BigbluebuttonRoom < ActiveRecord::Base
   # password:: Password to be use (in case role == nil)
   #
   # Uses the API but does not require a request to the server.
-  def join_url(username, role, password=nil)
+  def join_url(username, role, password=nil, params={})
     require_server
 
     case role
-    when :moderator
-      r = self.server.api.join_meeting_url(self.meetingid, username, self.moderator_password)
-    when :attendee
-      r = self.server.api.join_meeting_url(self.meetingid, username, self.attendee_password)
-    else
-      r = self.server.api.join_meeting_url(self.meetingid, username, password)
+      when :moderator
+        self.server.api.join_meeting_url(self.meetingid, username, self.moderator_password)
+      when :attendee
+        self.server.api.join_meeting_url(self.meetingid, username, self.attendee_password)
+      else
+        self.server.api.join_meeting_url(self.meetingid, username, password)
     end
-
-    r.strip! unless r.nil?
-    r
   end
 
 
